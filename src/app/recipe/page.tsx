@@ -2,23 +2,32 @@
 
 import { experimental_useObject as useObject } from "ai/react";
 import recipeSchema from "@/schemas/recipe";
+import { useState } from "react";
 
 export default function Page() {
+  const [prompt, setPrompt] = useState("");
+  // const [cusine, setCusine] = useState("");
   const { object, submit } = useObject({
     api: "/api/recipe",
     schema: recipeSchema,
   });
 
-  
+  const handleSubmit = () => {
+    submit({prompt});
+  };
+
   return (
     <div className="flex flex-col justify-start items-start gap-8 w-full p-6">
+      <input
+        type="text"
+        value={prompt}
+        onChange={(e) => setPrompt(e.target.value)}
+        placeholder="Enter your recipe prompt"
+        className="w-full p-2 border-2 text-purple-800 border-purple-900 rounded-md"
+      />
       <button
-        className="bg-purple-900 py-2 px-4 rounded-md"
-        onClick={() =>
-          submit(
-            "Palestinian Kunefe! Kunefe is a traditional Middle Eastern dessert originating from Palestine and the Levant. It's a shredded phyllo pastry dessert made with layers of phyllo dough, cheese, and syrup. The shredded phyllo is typically soaked in a sweet syrup, which gives kunefe its signature flavor and texture. This sweet treat is often served warm and topped with pistachios or sesame seeds. Kunefe is a popular dessert in countries such as Turkey, Lebanon, and Syria, and is often enjoyed on special occasions and celebrations. Its rich flavor and unique texture make it a beloved dessert in the Middle East."
-          )
-        }
+        className="bg-purple-900 py-2 px-4 rounded-md text-white"
+        onClick={handleSubmit}
       >
         Generate a recipe
       </button>
