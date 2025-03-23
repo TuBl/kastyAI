@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^1.1.11",
     "ai": "^4.1.21",
     "next": "15.1.6",
     "ollama-ai-provider": "^1.2.0",
