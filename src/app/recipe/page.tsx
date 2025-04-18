@@ -6,7 +6,6 @@ import { useState } from "react";
 
 export default function Page() {
   const [prompt, setPrompt] = useState("");
-  // const [cusine, setCusine] = useState("");
   const { object, submit } = useObject({
     api: "/api/recipe",
     schema: recipeSchema,
