@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# How to use this repo
 
-## Getting Started
+This can serve as a starting point for any AI-driven application that you wanna use the
+Vercel AI SDK in. I have included few examples and structured the code in a way that should
+allow you to switch between providers easily and to write modular, easy-to-maintain code.
 
-First, run the development server:
+## api
+```
+src
+├── app
+│   ├── api
+│   │   ├── completion
+│   │   │   └── route.ts
+│   │   ├── recipe
+│   │   │   └── route.ts
+│   │   └── weather
+        └── route.ts
+```
+Each `route` contains a handler that will recieve a request from one of our pages, notice that these usually come in pairs. the page.tsx will have something like `import { experimental_useObject as useObject } from "ai/react";` from the ai `client` library and it will be expecting the api route to utilize `import { streamObject } from "ai";` something equivalent from the `ai` library.
+        
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Providers
+```
+src
+└── providers
+     ├── ollama.ts
+     └── openai.ts
+```
+    
+Here you will find a quick way to switch between different providers eg; `ollama`, `openai`, etc.. Just import one of the many providers offered by Vercel (full list [here](https://sdk.vercel.ai/providers/ai-sdk-providers)) add your config, and export it for usage in your application.
+
+## Schemas
+```
+src
+└── schemas
+    ├── recipe.ts
+    └── weather.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+In this directory, you will export a [Zod](https://zod.dev/) object describing the shape of the shape of data your LLM is going to return the data in. This helps it to provide more accurate and predictable results.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tools
+```
+src
+└── tools
+    ├── command.ts
+    └── weather.ts
+```
+Here you will write `tools` which are a set of functions that can perform some pieces of logic eg; interact with external API to supercharge your model with access to external data or give it the ability to perform operations specific to your application needs.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The template my require some minor clean up, removing some unused files, but for the most part I believe it can serve as a very good basis to get started with!
