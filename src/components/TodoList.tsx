@@ -7,17 +7,17 @@ import { useState } from "react";
 export default function TodoList({
   initialTodos,
 }: {
-  initialTodos: Awaited<ReturnType<(typeof serverClient)["getTodos"]>>;
+  initialTodos: Awaited<ReturnType<(typeof serverClient.todo)["getTodos"]>>;
 }) {
-  const getTodos = trpc.getTodos.useQuery(undefined, {
+  const getTodos = trpc.todo.getTodos.useQuery(undefined, {
     initialData: initialTodos,
     refetchOnMount: false,
     refetchOnReconnect: false,
   });
-  const addTodo = trpc.addTodo.useMutation({
+  const addTodo = trpc.todo.addTodo.useMutation({
     onSettled: () => getTodos.refetch(),
   });
-  const toggleTodo = trpc.toggleTodo.useMutation({
+  const toggleTodo = trpc.todo.toggleTodo.useMutation({
     onSettled: () => getTodos.refetch(),
   });
   const [content, setContent] = useState("");
